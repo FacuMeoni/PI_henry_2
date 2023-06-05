@@ -8,8 +8,7 @@ module.exports = async(sequelize) => {
             defaultValue: DataTypes.UUIDV4
         },
         name:{
-            type:DataTypes.STRING,
-            allowNull: false
+            type:DataTypes.STRING
         }
     })
 }

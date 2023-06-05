@@ -28,11 +28,20 @@ let entries = Object.entries(sequelize.models);
 let capsEntries = entries.map((entry) => [entry[0][0].toUpperCase() + entry[0].slice(1), entry[1]]);
 sequelize.models = Object.fromEntries(capsEntries);
 
+
+// Ejecuto los models
+require('./models/Dog')(sequelize);
+require('./models/Temperament')(sequelize);
+require('./models/User')(sequelize);
+
 // Destructuring models para relacionar los modelos.
 const { Dog, Temperament } = sequelize.models;
 
 Dog.belongsToMany(Temperament, { through : 'dogsTemperaments'})
 Temperament.belongsToMany(Dog, { through : 'dogsTemperaments'})
+
+
+
 
 module.exports = {
   ...sequelize.models, // exportamos los modelos

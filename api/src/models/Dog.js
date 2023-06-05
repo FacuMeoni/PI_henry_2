@@ -25,16 +25,19 @@ module.exports = (sequelize) => {
         }
     },
     weight:{
-     type:DataTypes.STRING,
+     type:DataTypes.JSONB,
      allowNull:false 
     },
     height:{
-      type:DataTypes.STRING,
+      type:DataTypes.JSONB,
       allowNull: false
     },
     life_span:{
       type: DataTypes.STRING,
       allowNull: false
+    },
+    origin:{
+      type:DataTypes.STRING
     }
   });
 };
