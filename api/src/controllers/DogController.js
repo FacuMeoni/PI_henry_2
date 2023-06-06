@@ -95,45 +95,56 @@ const getBreedByNameOnDB = async(name) => {
     }
 }
 
+const getImageAPI = async(id) => {
+    try {
+        const { data } = await axios(`${API_URL}?api_key=${API_KEY}`);
+
+        const image = await Promise.all(data.find(async(img) => img.id === id));
+
+        return image.url;
+
+    } catch (error) {
+        throw new Error(error.message);
+    }
+}
+
 
 
 const getBreedByNameOnAPI = async(name) => {
     try {
         const response = await axios(`${API_URL}/search?q=${name}`);
-        const dogFounded = response.data;
-        console.log(dogFounded);
-        
+        const dogFounded = response.data[0]; //accedo al primer objeto del array
         if(!dogFounded)throw new Error('NOT FOUND')// si no lo encuentra lanza error
-        
-    const responseImage = await axios(`${API_IMAGE_URL}/${dogFounded[0].reference_image_id}`);
-    const dogImage = responseImage.data
+       
     
-
-    const weight = {
-        imperial: dogFounded.weight?.imperial, // Verifico si 'weight' está definido antes de acceder a 'imperial'
-        metric: dogFounded.weight?.metric, // lo mismo para acceder a 'metric'
-      };
-  
-      const height = {
-        imperial: dogFounded.height?.imperial, // Verificar si 'height' está definido antes de acceder a 'imperial'
-        metric: dogFounded.height?.metric, // lo mismo para acceder a 'metric'
-      };
-
-      
         
+        
+        const imageID = dogFounded. reference_image_id;
+
+        const image = await getImageAPI(imageID);
+
+        const weight = {
+            imperial: dogFounded.weight?.imperial, // Verifico si 'weight' está definido antes de acceder a 'imperial'
+            metric: dogFounded.weight?.metric, // lo mismo para acceder a 'metric'
+        };
+    
+        const height = {
+            imperial: dogFounded.height?.imperial, // Verificar si 'height' está definido antes de acceder a 'imperial'
+            metric: dogFounded.height?.metric, // lo mismo para acceder a 'metric'
+        };
+
+
+    
         
         return {
             name: dogFounded.name,
-            image: dogImage.url,
+            image,
             weight,
             height,
             life_span: dogFounded.life_span,
             origin: dogFounded.origin,
             temperament: dogFounded.temperament
         }
-
-
-  
     } catch (error) {
         throw new Error(error.message)
     }
@@ -142,7 +153,7 @@ const getBreedByNameOnAPI = async(name) => {
 
 const  getByDogBreedName = async(name) => {
    try {
-        const dogBreedDB = await getBreedByNameOnDB(name);
+        const dogBreedDB = await getBreedByNameOnDB(name); 
         const dogBreedAPI =  await getBreedByNameOnAPI(name);
            
        
