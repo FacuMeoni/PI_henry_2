@@ -9,7 +9,7 @@ const { Temperament } = require('../db');
 
 const getApiData = async() =>{
     try {
-        const { data } = await axios(`${API_URL}?api_key=${API_KEY}`);
+        const { data } = await axios(`${API_URL}?api_key=${API_KEY}&limit=60`);
         
         const temperaments = await Promise.all(data.map(async(dog) => {
         return {
