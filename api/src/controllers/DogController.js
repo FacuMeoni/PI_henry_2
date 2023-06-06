@@ -1,7 +1,7 @@
 require('dotenv').config();
 const axios = require('axios');
 const { Dog, Temperament } = require('../db');
-const { API_URL, API_KEY } = process.env;
+const { API_URL, API_KEY, API_IMAGE_URL } = process.env;
 
 // Hacer getDogs, get Dog By ID, getDog By Name, saveDBdog, create Dog.
 
@@ -43,20 +43,14 @@ const saveDogsDB = async() => {
         const allDogs = await getApiData();
   
         await Dog.bulkCreate(allDogs);
-
         console.log('Dogs Saved on db', allDogs.length);
-
-        const allTemperaments = await Temperament.findAll();
-
+        
+        // iteramos cada dog buscando el temperamento relacionado, convirtiendo los temperamentos en array, mapeandolos y encontrando o creando el temperamento utilizando FindOrCreate,  en la base de Datos, lo guardamos en una costante para 
         for (const dog of allDogs) {
             const dogTemperaments = await Promise.all(
               dog.temperament.split(',').map(async (temp) => {
-                const trimmedTemp = temp.trim();
-                let temperamentFounded = allTemperaments.find((temperament) => temperament.name === trimmedTemp);
-      
-                if (!temperamentFounded) temperamentFounded = await Temperament.create({ name: trimmedTemp }); // Si el temperamento no existe, lo creamos y lo guardamos en la base de datos
-      
-                return temperamentFounded;
+                const [temperament] = await Temperament.findOrCreate({ where: { name: temp } });
+                return temperament;
               })
             );
             const dbDog = await Dog.findOne({ where: { name: dog.name } });
@@ -69,13 +63,100 @@ const saveDogsDB = async() => {
 }
 
 
-// const getDogByName = async(name) => {
-//     try {
+const getAllDogsDB = async() => {
+    try {
+        const allDogs = await Dog.findAll({
+            include: {
+                model: Temperament,
+                attributes: ['name'],
+                through: { attributes: [] }
+            }
+        })
+        return allDogs;
+    } catch (error) {
         
-//     } catch (error) {
+    }
+}
+
+const getBreedByNameOnDB = async(name) => {
+    try {
+        const dogFounded = await Dog.findAll({
+            where:  { name },
+            include : {
+                model: Temperament,
+                attributes: ['name'],
+                through: { attributes: [] }
+            }
+        });
         
-//     }
-// }
+        return dogFounded;
+    } catch (error) {
+        throw new Error(error.message)
+    }
+}
+
+
+
+const getBreedByNameOnAPI = async(name) => {
+    try {
+        const response = await axios(`${API_URL}/search?q=${name}`);
+        const dogFounded = response.data;
+        console.log(dogFounded);
+        
+        if(!dogFounded)throw new Error('NOT FOUND')// si no lo encuentra lanza error
+        
+    const responseImage = await axios(`${API_IMAGE_URL}/${dogFounded[0].reference_image_id}`);
+    const dogImage = responseImage.data
+    
+
+    const weight = {
+        imperial: dogFounded.weight?.imperial, // Verifico si 'weight' está definido antes de acceder a 'imperial'
+        metric: dogFounded.weight?.metric, // lo mismo para acceder a 'metric'
+      };
+  
+      const height = {
+        imperial: dogFounded.height?.imperial, // Verificar si 'height' está definido antes de acceder a 'imperial'
+        metric: dogFounded.height?.metric, // lo mismo para acceder a 'metric'
+      };
+
+      
+        
+        
+        return {
+            name: dogFounded.name,
+            image: dogImage.url,
+            weight,
+            height,
+            life_span: dogFounded.life_span,
+            origin: dogFounded.origin,
+            temperament: dogFounded.temperament
+        }
+
+
+  
+    } catch (error) {
+        throw new Error(error.message)
+    }
+}
+
+
+const  getByDogBreedName = async(name) => {
+   try {
+        const dogBreedDB = await getBreedByNameOnDB(name);
+        const dogBreedAPI =  await getBreedByNameOnAPI(name);
+           
+       
+        if(!dogBreedDB.length && !dogBreedAPI.length )throw new Error('Breed not found') //  verificamos la longitud, en caso de estar vacias ambas throw error not found
+        
+
+        
+        return dogBreedDB ||  dogBreedAPI;
+   } catch (error) {
+        throw new Error(error.message);
+   }
+}
+
+
 
 
 
@@ -85,4 +166,6 @@ const saveDogsDB = async() => {
 
 module.exports = {
     saveDogsDB,
+    getByDogBreedName,
+    getAllDogsDB
 }

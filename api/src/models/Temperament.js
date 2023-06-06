@@ -10,5 +10,8 @@ module.exports = async(sequelize) => {
         name:{
             type:DataTypes.STRING
         }
+    },
+    {
+      timestamps: false
     })
 }

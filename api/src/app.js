@@ -22,7 +22,7 @@ app.use((req, res, next) => {
   next();
 });
 
-app.use('/', routes);
+app.use(require('./routes/index.js'));
 
 // Error catching endware.
 app.use((err, req, res, next) => { // eslint-disable-line no-unused-vars
