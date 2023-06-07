@@ -7,7 +7,7 @@ module.exports =  async(sequelize) => {
             primaryKey:true,
             defaultValue: DataTypes.UUIDV4
         },
-        username:{
+        name:{
             type:DataTypes.STRING(20),
             allowNull:false,
             unique: true
