@@ -16,13 +16,7 @@ module.exports = (sequelize) => {
     },
     image:{
       type:DataTypes.STRING,
-      allowNull: false,
-      validate:{
-          isUrl:{
-              args:true,
-              msg:'The image must be a valid URL'
-          }
-        }
+      allowNull: true,
     },
     weight:{
      type:DataTypes.JSONB,
@@ -38,6 +32,11 @@ module.exports = (sequelize) => {
     },
     origin:{
       type:DataTypes.STRING
+    },
+    createAtDB:{
+      type: DataTypes.BOOLEAN,
+      allowNull:false,
+      defaultValue:true
     }
   });
 };

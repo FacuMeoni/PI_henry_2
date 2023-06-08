@@ -7,8 +7,6 @@ const { conn } = require('./src/db.js');
 
 app.listen(3001, async() => {
   try {
-    saveDogsDB();
-    saveTemperamentsOnDB();
     await conn.sync({ force:true })
     console.log('Server on port 3001')
   } catch (error) {

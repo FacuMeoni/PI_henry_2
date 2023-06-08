@@ -1,11 +1,11 @@
 const express = require('express')
 const router = express.Router();
-const { getAllDogsDB, getByDogBreedName } = require('../controllers/DogController');
+const { getAllDogs, getByName } = require('../controllers/DogController');
 
 
-const getAllDogs = async(req,res) => {
+const getDogs = async(req,res) => {
     try {
-        const allDogs =  await getAllDogsDB();
+        const allDogs =  await getAllDogs();
        
         return res.status(200).json(allDogs);
     } catch (error) {
@@ -14,22 +14,22 @@ const getAllDogs = async(req,res) => {
 }
 
 
-const getByBreedName = async(req,res) => {
+const getDogByname = async(req,res) => {
     try {
-        const { name } = req.query
-        const dogBreeds = await getByDogBreedName(name)
-        
-        return res.status(200).json(dogBreeds)
+        const name = req.query.name;
+
+        const dog = await getByName(name);
+
+        return res.status(200).json(dog);
     } catch (error) {
-        return res.status(404).send(error.message)
+        return res.status(404).send(error.message);
     }
 }
 
 
 
 
-
 module.exports = {
-    getByBreedName,
-    getAllDogs
+    getDogs,
+    getDogByname
 }

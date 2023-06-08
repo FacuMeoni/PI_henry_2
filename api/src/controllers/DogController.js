@@ -1,18 +1,18 @@
 require('dotenv').config();
 const axios = require('axios');
 const { Dog, Temperament } = require('../db');
-const { API_URL, API_KEY, API_IMAGE_URL } = process.env;
+const { API_URL, API_KEY } = process.env;
 
 // Hacer getDogs, get Dog By ID, getDog By Name, saveDBdog, create Dog.
 
 const getApiData = async() => {
     try {
-       const { data } = await axios(`${API_URL}?api_key=${API_KEY}&limit=60`);
-        
+       const { data } = await axios(`${API_URL}?api_key=${API_KEY}`);
 
        const dogs = await Promise.all(
         data.map(async(dog) => {
             return {
+                id:dog.id,
                 name: dog.name,
                 image: dog.image.url,
                 weight:{
@@ -25,7 +25,8 @@ const getApiData = async() => {
                 },
                 life_span: dog.life_span,
                 origin: dog.origin,
-                temperament: dog.temperament
+                temperament: dog.temperament,
+                createAtDB:false
             }
         })
        );
@@ -38,38 +39,12 @@ const getApiData = async() => {
 }
 
 
-const saveDogsDB = async() => {
-    try {
-        const allDogs = await getApiData();
-  
-        await Dog.bulkCreate(allDogs);
-        console.log('Dogs Saved on db', allDogs.length);
-        
-        // iteramos cada dog buscando el temperamento relacionado, convirtiendo los temperamentos en array, mapeandolos y encontrando o creando el temperamento utilizando FindOrCreate,  en la base de Datos, lo guardamos en una costante para 
-        for (const dog of allDogs) {
-            const dogTemperaments = await Promise.all(
-              dog.temperament.split(',').map(async (temp) => {
-                const [temperament] = await Temperament.findOrCreate({ where: { name: temp } });
-                return temperament;
-              })
-            );
-            const dbDog = await Dog.findOne({ where: { name: dog.name } });
-      
-            await dbDog.addTemperaments(dogTemperaments);
-        }
-    } catch (error) {
-        throw new Error(error.message);
-    }
-}
-
-
 const getAllDogsDB = async() => {
     try {
         const allDogs = await Dog.findAll({
             include: {
                 model: Temperament,
                 attributes: ['name'],
-                through: { attributes: [] }
             }
         })
         return allDogs;
@@ -78,105 +53,49 @@ const getAllDogsDB = async() => {
     }
 }
 
-const getBreedByNameOnDB = async(name) => {
+
+const getAllDogs = async() => {
     try {
-        const dogFounded = await Dog.findAll({
-            where:  { name },
-            include : {
-                model: Temperament,
-                attributes: ['name'],
-                through: { attributes: [] }
-            }
-        });
+
+        const dbDogs = await getAllDogsDB();
+        const apiDogs = await getApiData();
         
-        return dogFounded;
-    } catch (error) {
-        throw new Error(error.message)
-    }
-}
-
-const getImageAPI = async(id) => {
-    try {
-        const { data } = await axios(`${API_URL}?api_key=${API_KEY}`);
-
-        const image = await Promise.all(data.find(async(img) => img.id === id));
-
-        return image.url;
-
+        const allDogs = apiDogs.concat(dbDogs); // concatenamos los dos resultados y retornamos
+        
+        return allDogs;
     } catch (error) {
         throw new Error(error.message);
     }
 }
 
 
-
-const getBreedByNameOnAPI = async(name) => {
+const getByName = async(name) => {
     try {
-        const response = await axios(`${API_URL}/search?q=${name}`);
-        const dogFounded = response.data[0]; //accedo al primer objeto del array
-        if(!dogFounded)throw new Error('NOT FOUND')// si no lo encuentra lanza error
-       
-    
-        
-        
-        const imageID = dogFounded. reference_image_id;
+        const allDogs = await getAllDogs();
 
-        const image = await getImageAPI(imageID);
+        const dog = allDogs.find((dog) => dog.name.toLowerCase() === name.toLowerCase()); // utilizamos la funcion que obtiene todos los perros, realizamos un find para buscar en minisculas en ambos casos.
+        if(!dog)throw new Error('Breed not found');// en caso de no haber lanzamos error.
 
-        const weight = {
-            imperial: dogFounded.weight?.imperial, // Verifico si 'weight' está definido antes de acceder a 'imperial'
-            metric: dogFounded.weight?.metric, // lo mismo para acceder a 'metric'
-        };
-    
-        const height = {
-            imperial: dogFounded.height?.imperial, // Verificar si 'height' está definido antes de acceder a 'imperial'
-            metric: dogFounded.height?.metric, // lo mismo para acceder a 'metric'
-        };
-
-
-    
-        
-        return {
-            name: dogFounded.name,
-            image,
-            weight,
-            height,
-            life_span: dogFounded.life_span,
-            origin: dogFounded.origin,
-            temperament: dogFounded.temperament
-        }
+        return dog;
     } catch (error) {
-        throw new Error(error.message)
+        throw new Error(error.meesage);
     }
 }
 
 
-const  getByDogBreedName = async(name) => {
-   try {
-        const dogBreedDB = await getBreedByNameOnDB(name); 
-        const dogBreedAPI =  await getBreedByNameOnAPI(name);
-           
-       
-        if(!dogBreedDB.length && !dogBreedAPI.length )throw new Error('Breed not found') //  verificamos la longitud, en caso de estar vacias ambas throw error not found
-        
-
-        
-        return dogBreedDB ||  dogBreedAPI;
-   } catch (error) {
-        throw new Error(error.message);
-   }
-}
-
-
-
-
+// const getDogByID = async(id, source) => {
+//         try {
+            
+//         } catch (error) {
+            
+//         }
+// }
 
 
 
 
 
 module.exports = {
-    saveDogsDB,
-    getByDogBreedName,
-    getAllDogsDB
+    getAllDogs,
+    getByName
 }

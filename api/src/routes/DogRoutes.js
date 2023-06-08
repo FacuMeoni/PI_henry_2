@@ -1,11 +1,11 @@
 const express = require('express');
 const router = express.Router();
-const { getByBreedName, getAllDogs } = require('../handlers/DogHandler'); 
+const {  getDogByname, getDogs } = require('../handlers/DogHandler'); 
 
 
-router.get('/', getAllDogs);
+router.get('/', getDogs);
 
-router.get('/name', getByBreedName);
+router.get('/name',  getDogByname);
 
 
 
