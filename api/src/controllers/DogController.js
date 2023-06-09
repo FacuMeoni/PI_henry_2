@@ -2,7 +2,6 @@ require('dotenv').config();
 const axios = require('axios');
 const { Dog, Temperament } = require('../db');
 const { API_URL, API_KEY } = process.env;
-const { Sequelize } = require('sequelize');
 
 // Hacer getDogs, get Dog By ID, getDog By Name, saveDBdog, create Dog.
 
@@ -16,6 +15,7 @@ const getApiData = async() => {
           const temperaments = dog.temperament
             ? dog.temperament.split(",").map((t) => ({ name: t.trim() }))
             : [];
+            // volvemos temperament un array que contenga cada temperamento dividido en objeto, sin espacios al principio ni final
   
           return {
             id: dog.id,
@@ -55,7 +55,7 @@ const getAllDogsDB = async() => {
                     attributes: []
                 }
             }
-        })
+        }) // Obtenemos todos los perros de la DB, incluyendo el model Temperament
         return allDogs;
     } catch (error) {
         
@@ -83,7 +83,7 @@ const getByName = async(name) => {
         const allDogs = await getAllDogs();
 
         const dog = allDogs.find((dog) => dog.name.toLowerCase().replace(/ /g, "")=== name.toLowerCase().replace(/ /g, "")); // utilizamos la funcion que obtiene todos los perros, realizamos un find para buscar en minisculas en ambos casos.
-        if(!dog)throw new Error('Breed not found');// en caso de no haber lanzamos error.
+        if(!dog)throw new Error(`No se encontró la raza "${name}".`);// en caso de no haber lanzamos error.
 
         return dog;
     } catch (error) {
@@ -98,7 +98,7 @@ const getDogByID = async(id) => {
         
         const dog = allDogs.find((dog) => dog.id.toString() === id);//find para encontrar el id identico, convertimos el id del perro to string, ya que soluciona la busqueda en caso de que sea para API o para DB.
         
-        if(!dog)throw new Error('Breed not found');// en caso de no haber lanzamos error.
+        if(!dog)throw new Error(`No se encontró la raza con el ID "${id}".`);// en caso de no haber lanzamos error.
 
         return dog;
     } catch (error) {
@@ -124,22 +124,22 @@ const createDog = async({ name,image, height, weight, life_span, origin, tempera
         const newDog = await Dog.create({ name, image, height, weight, life_span, origin });
 
         const temperaments = Array.isArray(temperament) ? temperament : [temperament]; //verifico si es Array, si no lo convierto
+
         const temp = temperaments
-        .join()
-        .split(',')
-        .map((temp) => temp.trim())
-        .filter((temp) => temp.length > 0)
-        .map((temp) => {
+        .join()// Unimos los elementos del array temperament con Join
+        .split(',')//dividimos en un nuevo array por cada coma
+        .map((temp) => temp.trim()) // eliminamos los espacios de delante y atras
+        .filter((temp) => temp.length > 0) // filtramos e incluimos aquellos que tengan longitud mayor a 0
+        .map((temp) => { //
             return Temperament.findOrCreate({
                 where: { name: temp }
             })
-                .then(([temp]) => temp); // Obtenemos el objeto Temperament de la tupla [temp, created]
-        });
-   
-    const tempResults = await Promise.all(temp);
-    console.log(tempResults.name);
+                .then(([temp]) => temp); 
+        }); //por cada temp realizamos la funcion findOrCreate de sequelize para verificar si existe o debemos crearlo en la base de datos utilizando el nombre. y por ultimo realizamos un .then para extraer el objeto temp.
 
-    await newDog.addTemperaments(tempResults);
+        const tempResults = await Promise.all(temp);//resolvemos promesas
+
+        await newDog.addTemperaments(tempResults);//relacion
 
         return `Dog ${newDog.name} creado con exito!`
     } catch (error) {
