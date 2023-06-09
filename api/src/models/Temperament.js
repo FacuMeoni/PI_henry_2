@@ -3,9 +3,9 @@ const { DataTypes } = require('sequelize')
 module.exports = async(sequelize) => {
     sequelize.define('Temperament', {
         id:{
-            type: DataTypes.UUID,
+            type: DataTypes.INTEGER,
             primaryKey:true,
-            defaultValue: DataTypes.UUIDV4
+            autoIncrement:true
         },
         name:{
             type:DataTypes.STRING
