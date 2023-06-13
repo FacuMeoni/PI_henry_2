@@ -1,0 +1,38 @@
+ .container {
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    max-height: 100vh;
+    height: 100vh;
+    overflow: hidden;
+    background-image: url('../../images/landing-background.jpg');
+    background-position: center;
+    background-size: cover;
+  }
+
+ .container img{
+    width: 1100px;
+ }
+
+
+ .container button{
+    cursor: pointer;
+    background-color: lightgreen;
+    font-family: 'Raleway 55m A', Helvetica;
+    color: black;
+    filter: sepia(25%);
+    border-radius: 20%;
+ }
+
+ .container h1{
+    filter: saturate(20%) sepia(80%);
+    font-family: sans-serif;
+    font-size: 45px;
+    margin: 5px;
+ }
+
