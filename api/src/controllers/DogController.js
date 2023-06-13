@@ -12,9 +12,12 @@ const getApiData = async() => {
        
        const dogs = await Promise.all(
         data.map(async (dog) => {
-          const temperaments = dog.temperament
-            ? dog.temperament.split(",").map((t) => ({ name: t.trim() }))
-            : [];
+            let temperaments = [];
+            if (dog.temperament) {
+              temperaments = dog.temperament
+                .split(",")
+                .map((t) => ({ name: t.trim() }));
+            }
             // volvemos temperament un array que contenga cada temperamento dividido en objeto, sin espacios al principio ni final
   
           return {
