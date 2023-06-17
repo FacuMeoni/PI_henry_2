@@ -1,11 +1,14 @@
-import './homPage.css'
-
+import css from './homePage.module.css'
+import Cards from '../../components/Cards';
 
 
 const Home = () => {
+    
+    
     return(
-        <div>
-            <h1>HomePage</h1>
+        <div className={css.containerHome}>
+            <span> HomePage</span>
+            <Cards/>
         </div>
     )
 }

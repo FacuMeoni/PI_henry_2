@@ -1,11 +1,17 @@
-const about = () => {
-    return(
-        <div>
-            <h1>AboutPage</h1>
-        </div>
-    )
+import React from 'react'
+
+
+class About extends React.Component {
+    constructor(props){
+        super(props)
+    }
+    render(){
+        return(
+            <div className="container-about">
+            </div>
+        )
+    }
 }
 
 
-
-export default about;
+export default About;

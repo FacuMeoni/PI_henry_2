@@ -15,24 +15,38 @@
     background-size: cover;
   }
 
- .container img{
-    width: 1100px;
- }
 
 
  .container button{
     cursor: pointer;
-    background-color: lightgreen;
+    background-color: white yellow;
     font-family: 'Raleway 55m A', Helvetica;
     color: black;
-    filter: sepia(25%);
+    filter: sepia(70%);
     border-radius: 20%;
  }
 
  .container h1{
-    filter: saturate(20%) sepia(80%);
-    font-family: sans-serif;
+    filter: saturate(20%) sepia(20%);
+    font-family: monospace;
     font-size: 45px;
     margin: 5px;
+    display: block;
+    border-right: 4px solid;
+    width: 8ch;
+    animation: typing 2s steps(8),
+    blink .5s infinite step-end alternate; 
+   
+    overflow: hidden;
+
  }
 
+
+ @keyframes typing {
+   from { width: 0 }
+ }
+
+
+@keyframes blink {
+   50% { border-color: transparent }
+}
