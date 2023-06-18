@@ -9,8 +9,8 @@ const Detail = () => {
     const { id } = useParams();
     const dispatch = useDispatch();
     const dog = useSelector(state => state.dog)
-    
     const temperamentNames = dog.Temperaments?.map(temp => temp.name).join(', ');
+    
 
 
     useEffect(() => {
