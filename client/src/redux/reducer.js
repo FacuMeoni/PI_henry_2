@@ -1,4 +1,4 @@
-import { GET_DOGS } from "./actions-types";
+import { GET_DOGS,  GET_DOG_BY_ID, RESET_DOG } from "./actions-types";
 
 const initalState = {
     allDogs : [],
@@ -13,6 +13,17 @@ const reducer = (state = initalState, { type, payload } ) => {
             return{
                 ...state,
                 allDogs: payload
+            }
+
+        case GET_DOG_BY_ID:
+            return {
+                ...state,
+                dog: payload
+            }
+        case RESET_DOG:
+            return{
+                ...state,
+                dog: {}
             }
         default:
             return { ...state }

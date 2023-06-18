@@ -17,6 +17,10 @@ module.exports = (sequelize) => {
     image:{
       type:DataTypes.STRING,
       allowNull: true,
+      validate: {
+        isUrl: true,
+        msg: 'image must be an url'
+      }
     },
     weight:{
      type:DataTypes.JSONB,
