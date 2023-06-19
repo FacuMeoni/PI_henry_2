@@ -5,9 +5,9 @@ const {  searchDogByName, getDogs, searchDogByID, postDog } = require('../handle
 
 router.get('/', getDogs);
 
-router.get('/name', searchDogByName);
+router.get('/search', searchDogByName);
 
-router.get('/:id', searchDogByID);
+router.get('/search/:id', searchDogByID);
 
 router.post('/', postDog);
 

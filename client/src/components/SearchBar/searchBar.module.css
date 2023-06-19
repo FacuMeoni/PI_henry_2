@@ -1,0 +1,19 @@
+
+.form_search button {
+    border-radius: 50%;
+    border: 1px solid;
+    border-color: #a9b0a9;
+    transition-duration: 0.4s ;
+    margin-left: 25px;
+}
+
+
+.form_search button img {
+    width: 18px;
+    height: 18px;
+}
+
+
+
+
+

@@ -85,7 +85,7 @@ const getByName = async(name) => {
     try {
         const allDogs = await getAllDogs();
 
-        const dog = allDogs.find((dog) => dog.name.toLowerCase().replace(/ /g, "")=== name.toLowerCase().replace(/ /g, "")); // utilizamos la funcion que obtiene todos los perros, realizamos un find para buscar en minisculas en ambos casos.
+        const dog = allDogs.filter((dog) => dog.name.toLowerCase().replace(/ /g, "").includes(name.toLowerCase().replace(/ /g, ""))); // utilizamos la funcion que obtiene todos los perros, realizamos un find para buscar en minisculas en ambos casos.
         if(!dog)throw new Error(`No se encontró la raza "${name}".`);// en caso de no haber lanzamos error.
 
         return dog;
@@ -113,7 +113,7 @@ const getDogByID = async(id) => {
 const createDog = async({ name,image, height, weight, life_span, origin, temperament }) => {
     try {
         if(!name || !image || !height || !weight || !life_span || !temperament){
-            let errorMessage = 'Por favor completar ';
+            let errorMessage = 'Please complete ';
             if(!name)errorMessage += 'name';
             if(!image)errorMessage += 'image';
             if(!height)errorMessage += 'height';
@@ -122,27 +122,24 @@ const createDog = async({ name,image, height, weight, life_span, origin, tempera
             if(!temperament)errorMessage += 'temperament';
             throw new Error(errorMessage);
         }
-
         const newDog = await Dog.create({ name, image, height, weight, life_span, origin });
-
+        
         const temperaments = Array.isArray(temperament) ? temperament : [temperament]; //verifico si es Array, si no lo convierto
-
-        const temp = temperaments
-        .join()// Unimos los elementos del array temperament con Join
-        .split(',')//dividimos en un nuevo array por cada coma
-        .map((temp) => temp.trim()) // eliminamos los espacios de delante y atras
-        .filter((temp) => temp.length > 0) // filtramos e incluimos aquellos que tengan longitud mayor a 0
-        .map((temp) => { //
-            return Temperament.findOrCreate({
-                where: { name: temp }
+        
+       const temp = temperaments
+        .join()
+        .split(',')
+        .map(async (temp) => {
+            return Temperament.findAll({
+                where: {name: temp.trim()}
             })
-                .then(([temp]) => temp); 
-        }); //por cada temp realizamos la funcion findOrCreate de sequelize para verificar si existe o debemos crearlo en la base de datos utilizando el nombre. y por ultimo realizamos un .then para extraer el objeto temp.
+            .then(([temp]) => temp); 
+        });
 
         const tempResults = await Promise.all(temp);//resolvemos promesas
 
         await newDog.addTemperaments(tempResults);//relacion
-
+       
         return `Dog ${newDog.name} creado con exito!`
     } catch (error) {
         throw new Error(error.message);

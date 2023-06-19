@@ -17,10 +17,7 @@ module.exports = (sequelize) => {
     image:{
       type:DataTypes.STRING,
       allowNull: true,
-      validate: {
-        isUrl: true,
-        msg: 'image must be an url'
-      }
+      defaultValue:'https://media.indiedb.com/cache/images/members/1/361/360683/thumb_620x2000/random_dog.jpg'
     },
     weight:{
      type:DataTypes.JSONB,

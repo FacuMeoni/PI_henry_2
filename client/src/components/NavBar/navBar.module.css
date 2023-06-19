@@ -1,13 +1,17 @@
 .nav_container {
     display: flex;
     align-items: center;
-    background-color:  #282a33;
-    height: 50px;
+    background-color:  #fff;
+    position: fixed;
+    top: 0;
+    width: 100%;
+    height: 82px;
 }
 .menu {
     display: flex;
     align-items: center;
 }
+
 .menu input {
     margin-left: 10px;
 }
@@ -24,16 +28,16 @@
 .menu ul li {
     display: inline;
     float: right;
-    border: 0.2px solid white;
+    border-top: 0;
     cursor: pointer;
 }
 
 .menu ul li:first-child {
-    margin-left:200px;
+    margin-left:350px;
   }
 
 .menu ul li img {
-    filter: invert(1);
+    filter: invert(0.5);
     width: 40px;
     display: block;
     padding: 20px;
@@ -65,15 +69,27 @@
 
 
 .menu li:hover {
-    background-color: #000;
+    background-color:  #d7d5d5;
+    border-radius: 16px;
+}
+
+.menu li img:hover {
+    scale: 1.1;
 }
 
 
 .menu li:hover span {
-    top: 11%;
+    top: 105%;
     visibility: visible;
     opacity: 1;
 }
+
+
+
+
+
+
+
 
 
 

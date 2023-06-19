@@ -20,7 +20,7 @@ export const getDogs = () => {
 export const getDogByID = (id) => {
     return async (dispatch) => {
       try {
-        const { data } = await axios.get(`${dogEndpoint}/${id}`);
+        const { data } = await axios.get(`${dogEndpoint}/search/${id}`);
   
         dispatch({
           type: GET_DOG_BY_ID,
@@ -38,6 +38,17 @@ export const resetDog = () => {
     return { type: RESET_DOG }
 }
 
+
+
+export const getDogsByName = (name) => {
+  return async (dispatch) => {
+    try {
+      
+    } catch (error) {
+      
+    }
+  }
+}
 
 
 
