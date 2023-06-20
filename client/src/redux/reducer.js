@@ -1,7 +1,8 @@
-import { GET_DOGS,  GET_DOG_BY_ID, RESET_DOG, GET_DOG_BY_NAME, SET_PAGE_NUMBER} from "./actions-types";
+import { GET_DOGS,  GET_DOG_BY_ID, RESET_DOG, GET_DOG_BY_NAME, SET_PAGE_NUMBER, SET_ACTIVE_LI } from "./actions-types";
 
 const initalState = {
-    pageNumber: 1,
+    activeLi: parseInt(localStorage.getItem("activeLi")) || 1,
+    pageNumber: parseInt(localStorage.getItem("")) || 1,
     allDogs: [],
     dog: {}
 }
@@ -10,6 +11,11 @@ const initalState = {
 
 const reducer = (state = initalState, { type, payload } ) => {
     switch(type){
+        case SET_ACTIVE_LI:
+            return {
+                ...state,
+               activeLi: payload
+            }
         case SET_PAGE_NUMBER:
             return{
                 ...state,

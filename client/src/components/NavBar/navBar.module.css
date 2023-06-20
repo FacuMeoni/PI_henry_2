@@ -1,7 +1,7 @@
 .nav_container {
     display: flex;
     align-items: center;
-    background-color:  rgba(22, 22, 23, 0.8);
+    background-color:  rgba(20, 20, 23, 0.8);
     backdrop-filter: blur(20px);
     position: fixed;
     top: 0;
@@ -70,23 +70,42 @@
 }
 
 
-.menu li:hover {
-    background-color:  #fffefe;
+.menu li:hover:not(.active) {
+    background-color: #fffefe;
     border-radius: 16px;
-}
-
-.menu li img:hover {
-    scale: 1.1;
+  }
+  
+  .menu li:not(.active):hover img {
     filter: invert(0);
-}
-
-
-.menu li:hover span {
+  }
+  
+  .menu li:hover:not(.active) span {
     top: 105%;
     visibility: visible;
     opacity: 1;
-}
+  }
+  
+  
+  .active {
+      border-bottom: 5px solid;
+      border-color: #04aa6d;
+      background-color: transparent !important;
+    }
+    
+    .active img,
+    .menu li.active img {
+      filter: invert(40%) sepia(74%) saturate(4141%) hue-rotate(140deg) brightness(103%) contrast(97%);
+    }
+    
+    .active:hover img {
+      filter: invert(40%) sepia(74%) saturate(4141%) hue-rotate(140deg) brightness(103%) contrast(97%);
+    }
 
+    .active:h span {
+      top: 105%;
+      visibility: visible;
+      opacity: 1;
+    }
 
 
 

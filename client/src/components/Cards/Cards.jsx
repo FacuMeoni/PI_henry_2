@@ -3,9 +3,6 @@ import Card from '../Card/Card';
 
 const Cards = ( { currentDogs } ) => {
     
-//allDogs and Card Component with properties of them
-
-
 
 const cardDogComponent = currentDogs.map((dog) => {
     return(

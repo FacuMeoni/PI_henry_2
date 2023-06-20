@@ -1,7 +1,7 @@
 import css from './Paginate.module.css'
 
 const Paginate =({ currentPage, totalPages, paginate}) => {
-  
+
 
   return (
     <div className={css.allPage_container}>

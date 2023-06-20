@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { GET_DOGS, GET_DOG_BY_NAME,GET_DOG_BY_ID, GET_TEMPERAMENTS, RESET_DOG, SET_PAGE_NUMBER } from "./actions-types";
+import { GET_DOGS, GET_DOG_BY_NAME,GET_DOG_BY_ID, GET_TEMPERAMENTS, RESET_DOG, SET_PAGE_NUMBER, SET_ACTIVE_LI } from "./actions-types";
 const dogEndpoint = 'http://localhost:3001/dogs';
 
 export const getDogs = () => {
@@ -56,4 +56,9 @@ export const getDogsByName = (name) => {
 
 export const setNumberPage = ( newNumber ) => {
   return { type: SET_PAGE_NUMBER, payload: newNumber }
+}
+
+
+export const setActiveLi = (numberLi) => {
+  return { type:SET_ACTIVE_LI, payload: numberLi}
 }
