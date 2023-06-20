@@ -34,8 +34,7 @@ const getApiData = async() => {
             },
             life_span: dog.life_span,
             origin: dog.origin || "Unknown",
-            Temperaments: temperaments,
-            createAtDB: false,
+            Temperaments: temperaments
           };
         })
       );
