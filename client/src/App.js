@@ -7,12 +7,14 @@ import Detail from './views/detailPage/detailPage';
 import About from './views/aboutPage/aboutPage';  
 import NavBar from './components/NavBar/navBar';
 import { useLocation } from 'react-router-dom';
+import BackButton from './components/BackButton/BackButton';
 
 function App() {
   const location = useLocation();
   return (
     <div className="App">
-          {/* {location.pathname !== '/' && <NavBar/>} */}
+          {location.pathname !== '/' && <NavBar/>} 
+          {location.pathname !== '/' && location.pathname !== '/home' ? <BackButton/> : null}
           <Routes>
             <Route exact path='/' element={<Landing/>}/>
             <Route exact path='/home' element={<Home/>}/>

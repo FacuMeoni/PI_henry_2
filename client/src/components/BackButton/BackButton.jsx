@@ -6,7 +6,7 @@ const BackButton = () => {
     const navigate = useNavigate();
 
     return(
-        <div className="arrow-container" onClick={() => navigate('/home')}>
+        <div className={css.back_button} onClick={() => navigate('/home')}>
             <img src={backArrow} alt="left-arrow"/>
         </div>
     )

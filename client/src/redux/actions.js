@@ -1,11 +1,12 @@
 import axios from 'axios';
-import { GET_DOGS, GET_DOG_BY_NAME,GET_DOG_BY_ID, GET_TEMPERAMENTS, RESET_DOG } from "./actions-types";
+import { GET_DOGS, GET_DOG_BY_NAME,GET_DOG_BY_ID, GET_TEMPERAMENTS, RESET_DOG, SET_PAGE_NUMBER } from "./actions-types";
 const dogEndpoint = 'http://localhost:3001/dogs';
 
 export const getDogs = () => {
     return async (dispatch) =>{
         try {
             const { data } = await axios.get(dogEndpoint);
+           
 
             dispatch({
                 type: GET_DOGS,
@@ -34,7 +35,6 @@ export const getDogByID = (id) => {
 
 
 export const resetDog = () => {
-    console.log('Resetting dog state');
     return { type: RESET_DOG }
 }
 
@@ -43,12 +43,17 @@ export const resetDog = () => {
 export const getDogsByName = (name) => {
   return async (dispatch) => {
     try {
-      
+      const { data } = await axios.get(`${dogEndpoint}/search?name=${name}`)
+      dispatch({
+        type: GET_DOG_BY_NAME,
+        payload: data
+      })
     } catch (error) {
       
     }
   }
 }
 
-
-
+export const setNumberPage = ( newNumber ) => {
+  return { type: SET_PAGE_NUMBER, payload: newNumber }
+}

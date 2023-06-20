@@ -3,3 +3,4 @@ export const GET_DOG_BY_NAME = 'GET_BY_NAME';
 export const GET_DOG_BY_ID = 'GET_BY_ID';
 export const GET_TEMPERAMENTS = 'GET_TEMPERAMENTS';
 export const RESET_DOG = 'RESET_DOG';
+export const SET_PAGE_NUMBER = 'SET_PAGE_NUMBER';

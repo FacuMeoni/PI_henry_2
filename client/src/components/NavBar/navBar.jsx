@@ -2,22 +2,27 @@ import css from './navBar.module.css';
 import homeLogo from '../../assets/Home-svgrepo-com.svg';
 import aboutLogo from '../../assets/aboout-svgrepo-com.svg';
 import createLogo from '../../assets/create-svgrepo-com.svg';
-import { useState } from 'react'
 import { useNavigate } from 'react-router-dom';
-import SearchBar from '../SearchBar/SearchBar';
+import { useSelector, useDispatch } from 'react-redux';
+import { setNumberPage } from '../../redux/actions';
+
 
 const NavBar = () => {
-
+    const dispatch = useDispatch();
     const navigate = useNavigate();
-
+    
+    
+    function onClickHome (){
+        dispatch(setNumberPage(1))
+        navigate('/home')
+    }
 
 
     return (
         <div className={css.nav_container}>
          <div className={css.menu}>
-           <SearchBar/>
            <ul>
-                 <li>
+                 <li onClick={() => onClickHome()}>
                     <img src={homeLogo} alt="Dog house"/>
                      <span>Home</span> 
                  </li>

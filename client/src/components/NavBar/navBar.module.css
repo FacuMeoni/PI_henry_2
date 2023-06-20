@@ -1,7 +1,8 @@
 .nav_container {
     display: flex;
     align-items: center;
-    background-color:  #fff;
+    background-color:  rgba(22, 22, 23, 0.8);
+    backdrop-filter: blur(20px);
     position: fixed;
     top: 0;
     width: 100%;
@@ -37,7 +38,7 @@
   }
 
 .menu ul li img {
-    filter: invert(0.5);
+    filter: invert(1);
     width: 40px;
     display: block;
     padding: 20px;
@@ -49,7 +50,8 @@
     height: auto;
     top: 0;
     transform: translateX(-50%);
-    background-color: #252424;
+    background-color:  rgba(22, 22, 23, 0.8);
+    backdrop-filter: blur(20px);
     color: #fff;
     white-space: nowrap;
     padding: 10px 15px;
@@ -69,12 +71,13 @@
 
 
 .menu li:hover {
-    background-color:  #d7d5d5;
+    background-color:  #fffefe;
     border-radius: 16px;
 }
 
 .menu li img:hover {
     scale: 1.1;
+    filter: invert(0);
 }
 
 

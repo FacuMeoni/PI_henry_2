@@ -1,7 +1,8 @@
-import { GET_DOGS,  GET_DOG_BY_ID, RESET_DOG } from "./actions-types";
+import { GET_DOGS,  GET_DOG_BY_ID, RESET_DOG, GET_DOG_BY_NAME, SET_PAGE_NUMBER} from "./actions-types";
 
 const initalState = {
-    allDogs : [],
+    pageNumber: 1,
+    allDogs: [],
     dog: {}
 }
 
@@ -9,10 +10,20 @@ const initalState = {
 
 const reducer = (state = initalState, { type, payload } ) => {
     switch(type){
+        case SET_PAGE_NUMBER:
+            return{
+                ...state,
+                pageNumber: payload
+            }
         case GET_DOGS:
             return{
                 ...state,
                 allDogs: payload
+            }
+        case GET_DOG_BY_NAME :
+            return {
+                ...state,
+                allDogs: [payload]
             }
 
         case GET_DOG_BY_ID:

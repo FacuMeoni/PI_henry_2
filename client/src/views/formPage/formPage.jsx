@@ -1,7 +1,11 @@
+import BackButton from '../../components/BackButton/BackButton';
+
+
+
 const form = () => {
     return(
         <div>
-            <h1>FormPage</h1>
+            <BackButton/>
         </div>
     )
 }
