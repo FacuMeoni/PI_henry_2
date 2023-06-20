@@ -6,6 +6,8 @@ import { useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector} from 'react-redux';
 import { setNumberPage } from '../../redux/actions';
 import { setActiveLi } from '../../redux/actions';
+import SearchBar from '../SearchBar/SearchBar.jsx';
+
 
 
 const NavBar = () => {
@@ -39,6 +41,7 @@ const NavBar = () => {
     return (
         <div className={css.nav_container}>
          <div className={css.menu}>
+            <SearchBar/>
            <ul>
                  <li className={activeLiv === 1 ? css.active : ''} onClick={() => onClickHome()}>
                     <img src={homeLogo} alt="Dog house"/>

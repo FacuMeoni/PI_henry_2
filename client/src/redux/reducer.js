@@ -69,7 +69,7 @@ const reducer = (state = initalState, { type, payload } ) => {
         case GET_DOG_BY_NAME :
             return {
                 ...state,
-                allDogs: [payload]
+                allDogs: payload
             }
 
         case GET_DOG_BY_ID:

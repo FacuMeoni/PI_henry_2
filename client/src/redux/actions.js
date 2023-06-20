@@ -42,10 +42,11 @@ export const resetDog = () => {
 
 
 
-export const getDogsByName = (name) => {
+export const getDogsByName = (search) => {
   return async (dispatch) => {
     try {
-      const { data } = await axios.get(`${dogEndpoint}/search?name=${name}`)
+      const { data } = await axios.get(`${dogEndpoint}/search?name=${search}`)
+      
       dispatch({
         type: GET_DOG_BY_NAME,
         payload: data

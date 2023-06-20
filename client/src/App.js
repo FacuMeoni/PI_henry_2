@@ -13,7 +13,7 @@ function App() {
   const location = useLocation();
   return (
     <div className="App">
-          {/* {location.pathname !== '/' && <NavBar/>}  */}
+          {location.pathname !== '/' && <NavBar/>} 
           {location.pathname !== '/' && location.pathname !== '/home' ? <BackButton/> : null}
           <Routes>
             <Route exact path='/' element={<Landing/>}/>
