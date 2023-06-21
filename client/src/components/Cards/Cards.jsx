@@ -4,17 +4,13 @@ import Card from '../Card/Card';
 const Cards = ( { currentDogs } ) => {
     
 
-const cardDogComponent = currentDogs.map((dog) => {
-    return(
-        <Card key={dog.id} id={dog.id} name={dog.name} image={dog.image} origin={dog.origin} Temperaments={dog.Temperaments}/> 
-        )
-})
-
 
 
     return(
         <div className="cards_container">
-            {cardDogComponent}
+            {currentDogs && currentDogs.map((dog) => 
+             <Card key={dog.id} id={dog.id} name={dog.name} image={dog.image} origin={dog.origin} Temperaments={dog.Temperaments} weight={dog.weight}/>
+            )}
         </div>
     )
 }

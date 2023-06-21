@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { GET_DOGS, GET_DOG_BY_NAME,GET_DOG_BY_ID, GET_TEMPERAMENTS, RESET_DOG, SET_PAGE_NUMBER, SET_ACTIVE_LI, FILTER_DOG_BY_TEMPERAMENT, FILTER_CREATED_DOG, FILTER_ALPHABETICALLY} from "./actions-types";
+import { FILTER_BY_WEIGHT, GET_DOGS, GET_DOG_BY_NAME,GET_DOG_BY_ID, GET_TEMPERAMENTS, RESET_DOG, SET_PAGE_NUMBER, SET_ACTIVE_LI, FILTER_DOG_BY_TEMPERAMENT, FILTER_CREATED_DOG, FILTER_ALPHABETICALLY, ADD_DOG} from "./actions-types";
 const dogEndpoint = 'http://localhost:3001/dogs';
 const temperamentEndpoint = 'http://localhost:3001/temperaments';
 
@@ -19,6 +19,7 @@ export const getDogs = () => {
         }
     }; 
 };
+
 
 export const getDogByID = (id) => {
     return async (dispatch) => {
@@ -42,10 +43,10 @@ export const resetDog = () => {
 
 
 
-export const getDogsByName = (search) => {
+export const getDogsByName = (payload) => {
   return async (dispatch) => {
     try {
-      const { data } = await axios.get(`${dogEndpoint}/search?name=${search}`)
+      const { data } = await axios.get(`${dogEndpoint}/search?name=${payload}`)
       
       dispatch({
         type: GET_DOG_BY_NAME,
@@ -57,13 +58,13 @@ export const getDogsByName = (search) => {
   }
 }
 
-export const setNumberPage = ( newNumber ) => {
-  return { type: SET_PAGE_NUMBER, payload: newNumber }
+export const setNumberPage = ( payload ) => {
+  return { type: SET_PAGE_NUMBER, payload }
 }
 
 
-export const setActiveLi = (numberLi) => {
-  return { type:SET_ACTIVE_LI, payload: numberLi}
+export const setActiveLi = (payload) => {
+  return { type:SET_ACTIVE_LI, payload }
 }
 
 
@@ -95,6 +96,10 @@ export const filterCreatedDog = (payload) => {
 
 
 export const filterAlphabetically = (payload) => {
-  console.log(payload)
+
   return { type:FILTER_ALPHABETICALLY, payload }
+}
+
+export const filterByWeight = (payload) => {
+    return { type: FILTER_BY_WEIGHT, payload}
 }

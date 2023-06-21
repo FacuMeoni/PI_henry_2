@@ -1,5 +1,5 @@
 import css from './homePage.module.css'
-import { getDogs, setNumberPage, getTemperaments, filterDogsByTemperaments, filterCreatedDog, filterAlphabetically } from '../../redux/actions';
+import { getDogs, setNumberPage, getTemperaments, filterDogsByTemperaments, filterCreatedDog, filterAlphabetically, filterByWeight } from '../../redux/actions';
 import Cards from '../../components/Cards/Cards';
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
@@ -34,7 +34,7 @@ const Home = () => {
 
   const [tidy, setTidy] = useState('');
 
-function handleFilterTemperaments(event) {
+ function handleFilterTemperaments(event) {
     const selectedValue = event.target.value;
     dispatch(filterDogsByTemperaments(selectedValue));
   }
@@ -43,6 +43,12 @@ function handleFilterTemperaments(event) {
   function handleFilterCreated(event) {
     const selectedValue = event.target.value;
     dispatch(filterCreatedDog(selectedValue))
+  }
+
+
+  function handleFilterWeight(event) {
+    const selectedValue = event.target.value;
+    dispatch(filterByWeight(selectedValue))
   }
 
   function handleSort(event){
@@ -72,12 +78,12 @@ function handleFilterTemperaments(event) {
     <div className={css.container_home}>
       {!isLoading && (
         <div>
-          <select onChange={e => handleFilterCreated(e)}>
+          <select onChange={handleFilterCreated}>
             <option key="all" value="all">All</option>
             <option key="Api" value="api">Api</option>
             <option key="Created" value="created">Created</option>
           </select>
-          <select onChange= {e => handleSort(e)}>
+          <select onChange= {handleSort}>
             <option key="a-z" value="a">A</option>
             <option key="z-a"value="z">Z</option>
           </select>
@@ -87,6 +93,10 @@ function handleFilterTemperaments(event) {
             allTemperaments.map((temp) =>
               temp.name ? <option key={temp.id}>{temp.name}</option> : null
             )}
+          </select>
+          <select onChange={handleFilterWeight}>
+            <option key='min' value='min'>Min weight</option>
+            <option key='max' value='max'>Max weight</option>
           </select>
           <Cards currentDogs={currentDogs} />
           <Paginate

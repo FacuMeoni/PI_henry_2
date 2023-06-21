@@ -4,7 +4,7 @@ import aboutLogo from '../../assets/aboout-svgrepo-com.svg';
 import createLogo from '../../assets/create-svgrepo-com.svg';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector} from 'react-redux';
-import { setNumberPage } from '../../redux/actions';
+import { getDogs, setNumberPage } from '../../redux/actions';
 import { setActiveLi } from '../../redux/actions';
 import SearchBar from '../SearchBar/SearchBar.jsx';
 
@@ -18,6 +18,7 @@ const NavBar = () => {
    
     
     function onClickHome (){
+        dispatch(getDogs())
         dispatch(setNumberPage(1))
         dispatch(setActiveLi(1))
         localStorage.setItem("activeLi", "1");

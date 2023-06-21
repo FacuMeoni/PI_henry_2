@@ -111,13 +111,11 @@ const getDogByID = async(id) => {
 //name, image, weight, height, life_span, origin
 const createDog = async({ name,image, height, weight, life_span, origin, temperament }) => {
     try {
-        if(!name || !image || !height || !weight || !life_span || !temperament){
+        if(!name || !height || !weight || !life_span || !temperament){
             let errorMessage = 'Please complete ';
             if(!name)errorMessage += 'name';
-            if(!image)errorMessage += 'image';
             if(!height)errorMessage += 'height';
             if(!weight)errorMessage += 'weight';
-            if(!life_span)errorMessage += 'life_span';
             if(!temperament)errorMessage += 'temperament';
             throw new Error(errorMessage);
         }

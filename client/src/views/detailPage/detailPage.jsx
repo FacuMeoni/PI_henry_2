@@ -37,14 +37,12 @@ const Detail = () => {
             <p>Origin: {dog.origin}</p>
             {dog.weight && (
               <>
-                <p>Weight imperial: {dog.weight.imperial}</p>
-                <p>Weight metric: {dog.weight.metric}</p>
+                <p>Weight: {dog.weight.metric} kg</p>
               </>
             )}
             {dog.height && (
               <>
-                <p>Height imperial: {dog.height.imperial}</p>
-                <p>Height metric: {dog.height.metric}</p>
+                <p>Height: {dog.height.metric} cm </p>
               </>
             )}
             <p>Life span: {dog.life_span}</p>

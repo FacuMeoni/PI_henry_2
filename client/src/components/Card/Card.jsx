@@ -2,12 +2,12 @@ import { useNavigate } from 'react-router-dom';
 import css from './Card.module.css'
 
 
-const Card = ({ id, name, image, origin, Temperaments }) => {
+const Card = ({ id, name, image, origin, Temperaments, weight }) => {
 
     const detailURL = `/detail/${id}`
     const navigate = useNavigate();
     const temperamentNames = Temperaments?.map(temp => temp.name).join(', ');
-
+    const weightMetric = weight?.metric
    
     return(
         <div className="card-container">
@@ -15,6 +15,7 @@ const Card = ({ id, name, image, origin, Temperaments }) => {
             <img src={image} alt={`dog-${name}`}/>
             <p>Origin: {origin } </p>
             <p>Temperaments: {temperamentNames}</p>
+            <p>Weight: {weightMetric} kg</p>
         </div>
     )
 }

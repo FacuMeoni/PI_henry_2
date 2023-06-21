@@ -20,11 +20,11 @@ module.exports = (sequelize) => {
       defaultValue:'https://media.indiedb.com/cache/images/members/1/361/360683/thumb_620x2000/random_dog.jpg'
     },
     weight:{
-     type:DataTypes.JSONB,
+     type:DataTypes.STRING,
      allowNull:false 
     },
     height:{
-      type:DataTypes.JSONB,
+      type:DataTypes.STRING,
       allowNull: false
     },
     life_span:{

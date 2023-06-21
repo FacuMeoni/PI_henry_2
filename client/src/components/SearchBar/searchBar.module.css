@@ -1,0 +1,7 @@
+.disabled {
+    visibility: hidden;
+}
+
+.error_active {
+    visibility: visible;
+}
