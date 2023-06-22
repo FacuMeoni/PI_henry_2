@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useEffect, useState } from 'react';
 import { useNavigate } from "react-router-dom"
 import validate from './validations';
-
+import css from './formPage.module.css'
 
 const Form = () => {
 
@@ -103,8 +103,8 @@ const Form = () => {
     return(
         <div>
             <BackButton/>
-            <h1> Create your Dog! </h1>
-            <form onSubmit={handleSubmit}>
+            <h1 className={css.title}> Create your Dog! </h1>
+            <form onSubmit={handleSubmit} className={css.form}>
                 <div>
                     <label>Name: </label>
                     <input type="text" value={input.name} name="name" onChange={handleChange} required/>
@@ -134,21 +134,20 @@ const Form = () => {
                     <input type="text" value={input.minSpan} placeholder='min Years'  name="minSpan" onChange={handleChange}/> - <input value={input.maxSpan}type="text" placeholder='max Years' name="maxSpan" onChange={handleChange}/>
                     {errors.minSpan && <span>{errors.minSpan}</span>} {errors.maxSpan && <span>{errors.maxSpan}</span>}
                 </div>
-                <label> Choose Dogs temperaments! </label>
-                <select onChange={handleSelect}>
+               <label className={css.temperaments_label}> Choose Dog temperaments! </label>
+                <select onChange={handleSelect} className={css.select}>
                     {allTemperaments && allTemperaments.map((temp) =>(
                            <option key={Math.random()} name={temp}>{temp}</option>
                     ))}
                 </select>
-                <div className="temperements-selected">
+                <div className={css.temperements_selected}>
                     {input.Temperaments.map(temp => (
                             <div key={Math.random()}> 
-                                <span>{temp}</span>
-                                <button onClick={() => handleDelete(temp)}>x</button>
+                                <p>{temp}<button onClick={() => handleDelete(temp)}>x</button></p>
                             </div> 
                     ))}
-                </div>
-                <button type='submit'>Create</button>
+               </div>
+                <button type='submit' disabled={errors.name || errors.maxSpan || errors.image || errors.minSpan || errors.minHeight || errors.maxHeight || errors.minWeight || errors.maxWeight } className={css.create_button}>Create</button>
             </form>
         </div>
     )

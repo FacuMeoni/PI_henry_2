@@ -1,0 +1,19 @@
+.allPage_container {
+    display: flex;
+    justify-content: center;
+    flex-direction: row;
+}
+
+.allPage_container button {
+    margin-bottom: 50px;
+    margin-right: 5px;
+    margin-left: 5px;
+}
+
+.allPage_container button:hover{
+    background-color: #04aa6d;
+}
+
+.allPage_container span{
+    font-size: 20px;
+}

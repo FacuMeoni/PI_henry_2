@@ -7,7 +7,7 @@ const { conn } = require('./src/db.js');
 
 app.listen(3001, async() => {
   try {
-    await conn.sync({ force:true })
+    await conn.sync({ force:false })
     console.log('Server on port 3001')
   } catch (error) {
   console.log(error.message)

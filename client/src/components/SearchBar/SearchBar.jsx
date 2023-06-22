@@ -23,13 +23,11 @@ const SearchBar = () => {
 
         setSearch('');
     }
-    // const errorSearch = Array.isArray(allDogs) && allDogs.length === 0;
 
     return(
         <form onSubmit={e => handleSubmit(e)}>
             <input type="search" placeholder="Find any Breed" value={search} onChange={handleOnChange}/>
             <button type="submit">Search</button>
-            {/* <span className={!errorSearch ? css.disabled : css.error_active }>Breed not found</span> */}
         </form>
     )
 }

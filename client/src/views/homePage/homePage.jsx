@@ -78,11 +78,13 @@ const Home = () => {
     <div className={css.container_home}>
       {!isLoading && (
         <div>
-          <select onChange={handleFilterCreated}>
-            <option key="all" value="all">All</option>
-            <option key="Api" value="api">Api</option>
-            <option key="Created" value="created">Created</option>
-          </select>
+          <div className={css.select_container}>
+
+            <select onChange={handleFilterCreated}>
+              <option key="all" value="all">All</option>
+              <option key="Api" value="api">Api</option>
+              <option key="Created" value="created">Created</option>
+            </select>
           <select onChange= {handleSort}>
             <option key="a-z" value="a">A</option>
             <option key="z-a"value="z">Z</option>
@@ -98,6 +100,7 @@ const Home = () => {
             <option key='min' value='min'>Min weight</option>
             <option key='max' value='max'>Max weight</option>
           </select>
+          </div>
           <Cards currentDogs={currentDogs} />
           <Paginate
             currentPage={currentPage}

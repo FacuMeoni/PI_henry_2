@@ -21,7 +21,6 @@
     list-style-type: none;
     margin: 0;
     padding: 0;
-    overflow: hidden;
     display: flex;
     justify-content: center;
 }
@@ -34,7 +33,7 @@
 }
 
 .menu ul li:first-child {
-    margin-left:350px;
+    margin-left: 550px;
   }
 
 .menu ul li img {
@@ -101,7 +100,7 @@
       filter: invert(40%) sepia(74%) saturate(4141%) hue-rotate(140deg) brightness(103%) contrast(97%);
     }
 
-    .active:h span {
+    .active:hover span {
       top: 105%;
       visibility: visible;
       opacity: 1;

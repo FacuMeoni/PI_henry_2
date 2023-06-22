@@ -1,0 +1,38 @@
+*{
+    font-family: Cambria;
+}
+
+
+.cards_container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: flex-start;
+    margin-bottom: 20px;
+}
+
+.card_container{
+    border: 2px solid;
+    border-radius: 20px;
+    width: 300px;
+    height: 400px;
+    background-color: #ecf3f0;
+    margin: 15px;
+    flex: 0 0 calc(33.33% - 30px); /* Asegura que haya 4 tarjetas por fila */
+    transition: transform 0.3s; 
+}
+
+
+.card_container h3 {
+        cursor: pointer;
+}
+
+.card_container:hover{
+    border-color: #04aa6d;
+}
+
+.card_container img {
+    width: auto;
+    height: 200px;
+    border-radius: 15px;
+}

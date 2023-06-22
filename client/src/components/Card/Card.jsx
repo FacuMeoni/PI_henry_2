@@ -10,12 +10,11 @@ const Card = ({ id, name, image, origin, Temperaments, weight }) => {
     const weightMetric = weight?.metric
    
     return(
-        <div className="card-container">
-            <span onClick={() => navigate(detailURL)}> {name} </span>
+        <div className={css.card_container}>
+            <h3 onClick={() => navigate(detailURL)}> {name} </h3>
             <img src={image} alt={`dog-${name}`}/>
-            <p>Origin: {origin } </p>
-            <p>Temperaments: {temperamentNames}</p>
             <p>Weight: {weightMetric} kg</p>
+            <p>Temperaments: {temperamentNames}</p>
         </div>
     )
 }

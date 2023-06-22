@@ -4,3 +4,17 @@
     align-items: center;
     height: 100vh;
 }
+
+
+.select_container{
+    margin-left: 150px;
+    margin-top: 100px;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
+
+.select_container select{
+    margin-right: 100px;
+    font-family: Cambria;
+}
