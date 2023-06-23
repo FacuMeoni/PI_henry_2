@@ -2,6 +2,7 @@ import { getDogByID, resetDog} from '../../redux/actions';
 import { useParams } from 'react-router-dom';
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import css from './detailPage.module.css'
 
 
 
@@ -28,26 +29,19 @@ const Detail = () => {
        return () => dispatch(resetDog());
       }, [dispatch, id])
 
+      const originDog = dog.origin === 'Unknown' ? 'The origin of this breed is currently unknown' : `They originate from ${dog.origin}`;
+      const descriptionDog = `This breed is known for being ${temperamentNames} dogs, with a life expectancy of ${dog.life_span || 'unknown'} years. They typically stand at ${dog.height?.metric || 'an unknown'} centimeters and weigh around ${dog.weight?.metric || 'an unknown'} kilograms. ${originDog}.`
+
     if(!dog.name)return <div className="loading-container">Loading...</div>;
         
     return (
-          <div className="all-detail-container">
-            <h1>{dog.name}</h1>
+      <div className={css.all_detail}>
+          <div className={css.all_detail_container}>
+            <h2 className={css.name_detail}>{dog.name}</h2>
             <img src={dog.image} alt={`dog-${dog.name}`} />
-            <p>Origin: {dog.origin}</p>
-            {dog.weight && (
-              <>
-                <p>Weight: {dog.weight.metric} kg</p>
-              </>
-            )}
-            {dog.height && (
-              <>
-                <p>Height: {dog.height.metric} cm </p>
-              </>
-            )}
-            <p>Life span: {dog.life_span}</p>
-            <p>Temperaments: {temperamentNames}</p>
+            <p className={css.description_container}>{descriptionDog}</p>
           </div>
+      </div>
         );
 };
 

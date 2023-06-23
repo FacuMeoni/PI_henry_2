@@ -60,7 +60,7 @@ const getAllDogsDB = async() => {
         }) // Obtenemos todos los perros de la DB, incluyendo el model Temperament
         return allDogs;
     } catch (error) {
-        
+        throw new error(error.message);
     }
 }
 

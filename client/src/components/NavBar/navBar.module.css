@@ -79,7 +79,7 @@
   }
   
   .menu li:hover:not(.active) span {
-    top: 105%;
+    top: 110%;
     visibility: visible;
     opacity: 1;
   }
@@ -101,7 +101,7 @@
     }
 
     .active:hover span {
-      top: 105%;
+      top: 110%;
       visibility: visible;
       opacity: 1;
     }

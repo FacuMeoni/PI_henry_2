@@ -11,8 +11,8 @@ const Home = () => {
     
   
   const dispatch = useDispatch();
-  const allTemperaments = useSelector(state => state.allTemperaments);
-  const allDogs = useSelector(state => state.allDogs);
+  const allTemperaments = useSelector(state => state.allTemperaments).sort((a, b) => a.name.localeCompare(b.name));
+  const allDogs = useSelector(state => state.dogs);
   
   
   // paginate
@@ -32,8 +32,7 @@ const Home = () => {
   //Selects functions
 
 
-  const [tidy, setTidy] = useState('');
-
+  
  function handleFilterTemperaments(event) {
     const selectedValue = event.target.value;
     dispatch(filterDogsByTemperaments(selectedValue));
@@ -56,7 +55,6 @@ const Home = () => {
     event.preventDefault();
     dispatch(filterAlphabetically(selectedValue));
     dispatch(setNumberPage(1));
-    setTidy(`Tidy ${selectedValue}`)
   }
 
   // loading && render

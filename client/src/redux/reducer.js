@@ -1,7 +1,7 @@
 import { GET_DOGS,  GET_DOG_BY_ID, RESET_DOG, GET_DOG_BY_NAME, SET_PAGE_NUMBER, SET_ACTIVE_LI, GET_TEMPERAMENTS, FILTER_DOG_BY_TEMPERAMENT, FILTER_CREATED_DOG,  FILTER_ALPHABETICALLY, FILTER_BY_WEIGHT } from "./actions-types";
 
 const initalState = {
-    activeLi: parseInt(localStorage.getItem("activeLi")) || 1,
+    activeLi: 1,
     pageNumber: 1,
     allDogs: [], //render
     dogs:[], // filtered
@@ -14,30 +14,28 @@ const initalState = {
 const reducer = (state = initalState, { type, payload } ) => {
     switch(type){
         case FILTER_BY_WEIGHT:
-                let sortedArr2 = [...state.allDogs] 
-                if(payload === 'min'){
-                    sortedArr2.sort((a,b) =>{
-                        if(parseInt(a.weight?.metric?.split('-')[0]) < parseInt(b.weight?.metric?.split('-')[0])) return -1;
-                        if(parseInt(a.weight?.metric?.split('-')[0]) > parseInt(b.weight?.metric?.split('-')[0])) return 1; //first value for compare minimal
-                        if(parseInt(a.weight?.metric?.split('-')[1]) < parseInt(b.weight?.metric?.split('-')[1])) return -1;// if mmin are the same check the second, maximun value
-                        if(parseInt(a.weight?.metric?.split('-')[1]) > parseInt(b.weight?.metric?.split('-')[1])) return 1;
-                        else return 0;
-                    })
-                } else if(payload === 'max'){
-                        sortedArr2.sort((a,b) =>{
-                            if(parseInt(a.weight?.metric?.split('-')[1]) > parseInt(b.weight?.metric?.split('-')[1])) return -1; //second value for compare maximun
-                            if(parseInt(a.weight?.metric?.split('-')[1]) < parseInt(b.weight?.metric?.split('-')[1])) return 1;
-                            if(parseInt(a.weight?.metric?.split('-')[0]) < parseInt(b.weight?.metric?.split('-')[0])) return -1; // if max are the same check the second, minimal value
-                            if(parseInt(a.weight?.metric?.split('-')[0]) > parseInt(b.weight?.metric?.split('-')[0])) return 1; 
-                            else return 0;
-                        })
+            let sortedArr2 = [...state.dogs];
+                sortedArr2.sort((a, b) => {
+                    const aWeightMin = parseInt(a.weight?.metric?.split('-')[0]); // first value of min Weigth
+                    const aWeightMax = parseInt(a.weight?.metric?.split('-')[1]) // second value of min Weight
+                    const bWeightMin = parseInt(b.weight?.metric?.split('-')[0]); // first value of max Weight
+                    const bWeightMax = parseInt(b.weight?.metric?.split('-')[1]); // first value of max weight
+                    
+                    if (payload === 'min') {
+                        if (aWeightMin !== bWeightMin) return aWeightMin - bWeightMin;
+                        return aWeightMax - bWeightMax;
+                    } else if (payload === 'max') {
+                        if (aWeightMax !== bWeightMax) return bWeightMax - aWeightMax;
+                        return aWeightMin - bWeightMin;
                     }
+                    return 0;
+                });
             return {
                 ...state,
-                allDogs: sortedArr2
+                dogs: sortedArr2
             }
         case FILTER_ALPHABETICALLY:
-            let sortedArr = [...state.allDogs];
+            let sortedArr = [...state.dogs];
             if (payload === 'a') {
               sortedArr.sort((a, b) => {
                 if (a.name > b.name) return 1;
@@ -53,20 +51,20 @@ const reducer = (state = initalState, { type, payload } ) => {
             }
             return {
                 ...state,
-                allDogs: sortedArr
+                dogs: sortedArr
             }
         case FILTER_CREATED_DOG:
-            const filterDogs = payload === 'created' ? state.dogs.filter(dog => dog.createAtDB) : state.dogs.filter(dog => !dog.createAtDb)
+            const filterDogs = payload === 'created' ? state.allDogs.filter(dog => dog.createAtDB) : state.allDogs.filter(dog => !dog.createAtDb)
             return{
                     ...state,
-                    allDogs: payload === 'all' ? state.dogs : filterDogs
-            }
+                    dogs: payload === 'all' ? state.allDogs : filterDogs
+            }   
     
         case FILTER_DOG_BY_TEMPERAMENT:
-            const temperamenstFiltered = payload === 'all' ? state.dogs : state.dogs.filter((dog) => dog.Temperaments && dog.Temperaments.some((temp) => temp && temp.name === payload));
+            const temperamenstFiltered = payload === 'all' ? state.allDogs : state.allDogs.filter((dog) => dog.Temperaments && dog.Temperaments.some((temp) => temp && temp.name === payload));
             return{
                 ...state,
-                allDogs: temperamenstFiltered,
+                dogs: temperamenstFiltered,
             }
         case GET_TEMPERAMENTS :
             return{

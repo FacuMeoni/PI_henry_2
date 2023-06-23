@@ -1,17 +1,16 @@
 import axios from 'axios';
 import BackButton from '../../components/BackButton/BackButton';
-import { getTemperaments } from '../../redux/actions';
-import { useDispatch, useSelector } from 'react-redux';
-import { useEffect, useState } from 'react';
+import { useSelector } from 'react-redux';
+import { useState } from 'react';
 import { useNavigate } from "react-router-dom"
 import validate from './validations';
 import css from './formPage.module.css'
+import defaultImage from '../../images/random_dog.jpg'
 
 const Form = () => {
 
-    const dispatch = useDispatch();
     const navigate = useNavigate();
-    const allTemperaments = useSelector(state => state.allTemperaments).map(temp => temp.name).sort((a, b) => a.localeCompare(b));
+    const allTemperaments = useSelector(state => state.allTemperaments).sort((a, b) => a.name.localeCompare(b.name));
     const [ errors, setErrors ]= useState({})
     const [ input, setInput ] = useState({
         name: "", 
@@ -29,10 +28,6 @@ const Form = () => {
         Temperaments:[]
     })
     
-    useEffect(() => {
-        dispatch(getTemperaments())
-    }, []);
-
     //handles
     function handleChange(event) {
         setInput({
@@ -62,12 +57,31 @@ const Form = () => {
         })
     }
 
+    function handleCancel(event){
+        event.preventDefault();
+        setInput({
+            name: "", 
+            image: "",
+            minHeight: "",
+            maxHeight: "",
+            height: "",
+            minWeight: "",
+            maxWeight: "",
+            weight: "",
+            maxSpan: "",
+            minSpan:"",
+            life_span:"",
+            origin:"",
+            Temperaments:[]
+        })
+    }
+
     function handleSubmit(event){
         event.preventDefault();
         const temperament = input.Temperaments.join(', '); 
         const dog = {
             name: input.name,
-            image: input.image,
+            image: input.image || defaultImage,
             weight: `${input.minWeight} - ${input.maxWeight}`,
             height: `${input.minHeight} - ${input.maxHeight}`,
             life_span: `${input.minSpan} - ${input.maxSpan}`,
@@ -94,7 +108,7 @@ const Form = () => {
             origin:"",
             Temperaments:[]
           });
-          // vaciamos el estado local
+
          navigate('/home')
         }
     }
@@ -137,16 +151,17 @@ const Form = () => {
                <label className={css.temperaments_label}> Choose Dog temperaments! </label>
                 <select onChange={handleSelect} className={css.select}>
                     {allTemperaments && allTemperaments.map((temp) =>(
-                           <option key={Math.random()} name={temp}>{temp}</option>
+                           <option key={temp.id} name={temp.name}>{temp.name}</option>
                     ))}
-                </select>
+                </select>   
                 <div className={css.temperements_selected}>
                     {input.Temperaments.map(temp => (
-                            <div key={Math.random()}> 
+                            <div key={Math.random()}>   
                                 <p>{temp}<button onClick={() => handleDelete(temp)}>x</button></p>
                             </div> 
                     ))}
                </div>
+               <button onClick={handleCancel}>Cancel</button>
                 <button type='submit' disabled={errors.name || errors.maxSpan || errors.image || errors.minSpan || errors.minHeight || errors.maxHeight || errors.minWeight || errors.maxWeight } className={css.create_button}>Create</button>
             </form>
         </div>

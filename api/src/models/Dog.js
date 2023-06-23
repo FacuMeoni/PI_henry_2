@@ -16,8 +16,7 @@ module.exports = (sequelize) => {
     },
     image:{
       type:DataTypes.STRING,
-      allowNull: true,
-      defaultValue:'https://media.indiedb.com/cache/images/members/1/361/360683/thumb_620x2000/random_dog.jpg'
+      allowNull: true
     },
     weight:{
      type:DataTypes.STRING,
@@ -32,8 +31,7 @@ module.exports = (sequelize) => {
       allowNull: false
     },
     origin:{
-      type:DataTypes.STRING,
-      defaultValue: "Unknown"
+      type:DataTypes.STRING
     },
     createAtDB:{
       type: DataTypes.BOOLEAN,
