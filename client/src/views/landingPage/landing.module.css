@@ -10,7 +10,7 @@
     max-height: 100vh;
     height: 100vh;
     overflow: hidden;
-    background-image: url('../../images/landing-background.jpg');
+    background-image: url('../../images/landing-background.webp');
     background-position: center;
     background-size: cover;
   }

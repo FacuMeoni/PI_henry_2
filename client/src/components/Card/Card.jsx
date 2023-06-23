@@ -11,10 +11,15 @@ const Card = ({ id, name, image, origin, Temperaments, weight }) => {
    
     return(
         <div className={css.card_container}>
-            <h3 onClick={() => navigate(detailURL)}> {name} </h3>
-            <img src={image} alt={`dog-${name}`}/>
-            <p>Weight: {weightMetric} kg</p>
-            <p>Temperaments: {temperamentNames}</p>
+            <div className={css.front}>
+                <img src={image} style={{ width: '100%', height: '100%', objectFit:'cover'}} alt={`dog-${name}`}/>
+                <h3> {name} </h3>
+            </div>
+            <div className={css.back}>
+                <p className={css.temperaments_container}>{temperamentNames}</p>
+                <div className={css.weight_container}><p>{weightMetric} kg</p></div>
+                <button onClick={() => navigate(detailURL)}>Read more</button>
+            </div>
         </div>
     )
 }

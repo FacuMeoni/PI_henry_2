@@ -115,10 +115,10 @@ const Form = () => {
 
 
     return(
-        <div>
+        <div className={css.all_form_container}>
             <BackButton/>
-            <h1 className={css.title}> Create your Dog! </h1>
             <form onSubmit={handleSubmit} className={css.form}>
+                <h1 className={css.title}> Create your Dog! </h1>
                 <div>
                     <label>Name: </label>
                     <input type="text" value={input.name} name="name" onChange={handleChange} required/>

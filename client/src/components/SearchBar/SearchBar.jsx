@@ -20,8 +20,6 @@ const SearchBar = () => {
     function handleSubmit (event) {
         event.preventDefault();
         dispatch(getDogsByName(search));
-
-        setSearch('');
     }
 
     return(

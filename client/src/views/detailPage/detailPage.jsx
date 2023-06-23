@@ -30,13 +30,13 @@ const Detail = () => {
       }, [dispatch, id])
 
       const originDog = dog.origin === 'Unknown' ? 'The origin of this breed is currently unknown' : `They originate from ${dog.origin}`;
-      const descriptionDog = `This breed is known for being ${temperamentNames} dogs, with a life expectancy of ${dog.life_span || 'unknown'} years. They typically stand at ${dog.height?.metric || 'an unknown'} centimeters and weigh around ${dog.weight?.metric || 'an unknown'} kilograms. ${originDog}.`
+      const descriptionDog = `This breed is known for being ${temperamentNames} dogs. With a life expectancy of ${dog.life_span || 'unknown'} years. They typically stand at ${dog.height?.metric || 'an unknown'} centimeters and weigh around ${dog.weight?.metric || 'an unknown'} kilograms. ${originDog}.`
 
     if(!dog.name)return <div className="loading-container">Loading...</div>;
         
     return (
       <div className={css.all_detail}>
-          <div className={css.all_detail_container}>
+          <div className={css.detail_container}>
             <h2 className={css.name_detail}>{dog.name}</h2>
             <img src={dog.image} alt={`dog-${dog.name}`} />
             <p className={css.description_container}>{descriptionDog}</p>

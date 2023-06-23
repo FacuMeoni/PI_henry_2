@@ -8,8 +8,7 @@ export const getDogs = () => {
     return async (dispatch) =>{
         try {
             const { data } = await axios.get(dogEndpoint);
-           
-
+        
             dispatch({
                 type: GET_DOGS,
                 payload: data

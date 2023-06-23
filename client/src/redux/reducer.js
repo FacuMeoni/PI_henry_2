@@ -3,8 +3,8 @@ import { GET_DOGS,  GET_DOG_BY_ID, RESET_DOG, GET_DOG_BY_NAME, SET_PAGE_NUMBER, 
 const initalState = {
     activeLi: 1,
     pageNumber: 1,
-    allDogs: [], //render
-    dogs:[], // filtered
+    allDogs: [], //filter
+    dogs:[], // render
     dog: {},
     allTemperaments: []
 }
@@ -90,7 +90,7 @@ const reducer = (state = initalState, { type, payload } ) => {
         case GET_DOG_BY_NAME :
             return {
                 ...state,
-                allDogs: payload
+                dogs: payload
             }
 
         case GET_DOG_BY_ID:

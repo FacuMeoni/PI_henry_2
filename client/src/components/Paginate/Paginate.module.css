@@ -2,18 +2,24 @@
     display: flex;
     justify-content: center;
     flex-direction: row;
+    margin: 20px;
 }
 
 .allPage_container button {
-    margin-bottom: 50px;
-    margin-right: 5px;
-    margin-left: 5px;
+    margin-right: 10px;
+    margin-left: 10px;
+    transition: transform 0.3s;
 }
 
 .allPage_container button:hover{
-    background-color: #04aa6d;
+    scale: 1.1;
 }
 
 .allPage_container span{
     font-size: 20px;
+}
+
+
+.pageCurrent {
+    background-color: #04aa6d;
 }

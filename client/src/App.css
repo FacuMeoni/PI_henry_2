@@ -1,4 +1,11 @@
 .App {
-  text-align: center;
+  max-width: 5000px;
+  min-width: 100px;
+  min-height: 100vh;
+  padding: 0;
+  margin: 0;
+  background-color: #e2e2e2;
 }
+
+
 
