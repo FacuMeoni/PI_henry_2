@@ -9,6 +9,7 @@
     margin-right: 10px;
     margin-left: 10px;
     transition: transform 0.3s;
+    cursor: pointer;
 }
 
 .allPage_container button:hover{
